@@ -1,4 +1,4 @@
-# FPS & Performance Overlay
+# FPS & Performance Extension
 
 A simple Chrome extension that shows a lightweight overlay with real-time performance metrics.  
 Perfect for QA engineers, developers, and game testers who want to monitor FPS, frame time, memory usage, and other browser performance stats **without opening DevTools**.
