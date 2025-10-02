@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "FPS & Performance Overlay",
-  "version": "1.0.0",
+  "name": "FPS & Performance Extension",
+  "version": "1.0.1",
   "description": "Lightweight overlay for real-time FPS and performance metrics. Perfect for QA engineers and developers.",
   "icons": {
     "16": "images/icon16.png",
@@ -24,6 +24,6 @@
       "48": "images/icon48.png",
       "128": "images/icon128.png"
     },
-    "default_title": "FPS & Performance Overlay"
+    "default_title": "FPS & Performance Extension"
   }
 }
