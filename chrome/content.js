@@ -4,7 +4,7 @@
   const SAMPLE_SEC = 1.0;
   const LOW_WINDOW = 5.0;
   const UPDATE_HZ = 10;
-  const START_VISIBLE = true;
+  // const START_VISIBLE = true; // <-- УДАЛИЛИ, теперь берем из настроек
 
   // UI
   const THEME_BG = "rgba(0,0,0,0.7)";
@@ -38,6 +38,7 @@
 
   // ---------- Preferences ----------
   const DEFAULT_PREFS = {
+    isOverlayVisible: true, // <-- ДОБАВИЛИ: Сохраняем состояние видимости
     showChart: true,
     showFPS: true,
     showLow1: true,
@@ -55,7 +56,7 @@
   let PREFS = { ...DEFAULT_PREFS };
 
   // ---------- State ----------
-  let visible = START_VISIBLE;
+  let visible = true; // Начальное значение будет перезаписано при старте
   let rafId = 0;
   const frames = [];
   const framesLong = [];
@@ -296,7 +297,13 @@
 
   // ---------- Hotkey ----------
   window.addEventListener("keydown", e => {
-    if (!!e.ctrlKey===HOTKEY.ctrl && !!e.altKey===HOTKEY.alt && e.key.toLowerCase()===HOTKEY.key) { setVisible(!visible); e.preventDefault(); }
+    if (!!e.ctrlKey===HOTKEY.ctrl && !!e.altKey===HOTKEY.alt && e.key.toLowerCase()===HOTKEY.key) {
+      const newState = !visible;
+      setVisible(newState);
+      PREFS.isOverlayVisible = newState; // <-- ИЗМЕНЕНИЕ: обновляем локальный объект
+      storageSet({ isOverlayVisible: newState }); // <-- ИЗМЕНЕНИЕ: сохраняем в сторадж
+      e.preventDefault();
+    }
   }, true);
 
   // ---------- Start ----------
@@ -306,7 +313,10 @@
 
     ensureHUD();
     hud.removeChild(panel); panel=buildSettingsPanel(); hud.appendChild(panel);
-    setVisible(START_VISIBLE);
+    
+    // <-- ИЗМЕНЕНИЕ: берем видимость из PREFS, а не константы
+    setVisible(PREFS.isOverlayVisible); 
+    
     requestAnimationFrame(tick);
     renderLoop();
   })();
